@@ -9,7 +9,23 @@ import { MENU_BG_COLOR } from "./constants";
 import Game, { Action } from "./components/Game";
 import { GameState } from "./game/gameState";
 import { PartyData } from "./components/NewGame/createParty";
-import { Direction, Stage } from "./game/stage";
+import { Direction, MusicType, Stage } from "./game/stage";
+
+// Type guards
+const isDirection = (action: Action): action is Direction => {
+  return (
+    action === Direction.UP ||
+    action === Direction.RIGHT ||
+    action === Direction.DOWN ||
+    action === Direction.LEFT ||
+    action === Direction.ABOVE ||
+    action === Direction.BELOW
+  );
+};
+
+const isMusicType = (action: Action): action is MusicType => {
+  return action === MusicType.BATTLE || action === MusicType.BACKGROUND;
+};
 
 enum Screen {
   MAIN_MENU,
@@ -27,6 +43,7 @@ export default function Main() {
   const [ambience, setAmbience] = useState<string | undefined>(
     "wind-snow-peak",
   );
+  const [currentMusic, setMusic] = useState<string | undefined>();
   const newGame = () => {
     playSfx();
     setScreen(Screen.NEW_GAME);
@@ -60,18 +77,29 @@ export default function Main() {
     setScreen(Screen.GAME);
   };
 
-  const updateGameState = (action: Action) => {
-    if ((action as boolean) === true) {
+  const updateGameState = (action: string) => {
+    if (action === "GRID") {
       setDisplayGrid(!displayGrid);
       return;
     }
+    const music = gameState?.stage.chooseMusic(action);
+    if (music) {
+      if (music === currentMusic) {
+        setMusic("stop");
+      } else {
+        setMusic(music);
+      }
+    }
 
-    gameState?.stage.move(action as Direction);
-    const ambience = gameState?.stage.getAmbience();
+    if (isDirection(action)) {
+      gameState?.stage.move(action as Direction);
+    }
+
     setTimeout(() => {
+      const ambience = gameState?.stage.getAmbience();
       setAmbience(ambience);
       setBackground(gameState?.stage.name()!);
-    }, 100);
+    }, 200);
   };
 
   switch (screen) {
@@ -118,6 +146,7 @@ export default function Main() {
       return (
         <GameWrapper
           ambience={ambience}
+          music={currentMusic}
           background={background}
           displayGrid={displayGrid}
         >

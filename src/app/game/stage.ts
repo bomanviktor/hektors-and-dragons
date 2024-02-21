@@ -1,16 +1,22 @@
 import { ambiences } from "./sound/ambience";
+import { tracklist } from "./sound/music";
 
 const camelToKebab = (input: string): string => {
   return input.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 };
 
 export enum Direction {
-  UP,
-  RIGHT,
-  DOWN,
-  LEFT,
-  ABOVE,
-  BELOW,
+  UP = "UP",
+  RIGHT = "RIGHT",
+  DOWN = "DOWN",
+  LEFT = "LEFT",
+  ABOVE = "ABOVE",
+  BELOW = "BELOW",
+}
+
+export enum MusicType {
+  BATTLE = "BATTLE_MUSIC",
+  BACKGROUND = "BACKGROUND_MUSIC",
 }
 
 export interface Location {
@@ -24,6 +30,9 @@ export class Stage {
   location: Location;
   allowedMoves: Direction[];
   ambience: string;
+  battleMusic: string | undefined;
+  backgroundMusic: string | undefined;
+
   constructor(chapter: string, x: number, y: number, z: number) {
     this.chapter = chapter;
     this.location = { x, y, z };
@@ -53,9 +62,47 @@ export class Stage {
         break;
     }
     this.setAmbience();
+    this.setMusic();
   }
 
-  setAmbience() {
+  chooseMusic(musicType: string): string | undefined {
+    switch (musicType) {
+      case "BATTLE_MUSIC":
+        return this.battleMusic;
+      case "BACKGROUND_MUSIC":
+        return this.backgroundMusic;
+    }
+  }
+
+  private resetMusic(resetBackground: boolean, resetBattle: boolean) {
+    if (resetBackground) {
+      this.backgroundMusic = undefined;
+    }
+    if (resetBattle) {
+      this.battleMusic = undefined;
+    }
+  }
+
+  private setMusic() {
+    this.resetMusic(true, true);
+    for (const [location, coordinates] of Object.entries(tracklist)) {
+      for (const coordinate of coordinates) {
+        if (
+          coordinate.x == this.location.x &&
+          coordinate.y == this.location.y &&
+          coordinate.z == this.location.z
+        ) {
+          if (location.includes("battle")) {
+            this.battleMusic = `${camelToKebab(location)}`;
+          } else {
+            this.backgroundMusic = `${camelToKebab(location)}`;
+          }
+        }
+      }
+    }
+  }
+
+  private setAmbience() {
     for (const [location, coordinates] of Object.entries(ambiences)) {
       for (const coordinate of coordinates) {
         if (
