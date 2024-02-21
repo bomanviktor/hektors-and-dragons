@@ -22,6 +22,7 @@ const SubmitButton = ({ text, sound = "button-click" }: Params) => {
 
 export const playSfx = (sound: string = "button-click") => {
   const audio = new Audio(`./sfx/${sound}.mp3`);
+  audio.volume = 0.4;
   audio.play();
 };
 

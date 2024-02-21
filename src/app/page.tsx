@@ -24,6 +24,9 @@ export default function Main() {
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [background, setBackground] = useState("");
   const [displayGrid, setDisplayGrid] = useState(false);
+  const [ambience, setAmbience] = useState<string | undefined>(
+    "wind-snow-peak",
+  );
   const newGame = () => {
     playSfx();
     setScreen(Screen.NEW_GAME);
@@ -46,22 +49,27 @@ export default function Main() {
       partyData.difficulty,
       characterData,
     );
-    console.log(gameState);
+    if (!gameState) {
+      return;
+    }
     setGameState(gameState);
     setTimeout(() => {
-      setBackground(gameState?.stage.name()!);
+      setAmbience(gameState.stage.ambience);
+      setBackground(gameState.stage.name());
     }, 100);
     setScreen(Screen.GAME);
   };
 
   const updateGameState = (action: Action) => {
-    if (action as boolean === true) {
+    if ((action as boolean) === true) {
       setDisplayGrid(!displayGrid);
       return;
     }
 
     gameState?.stage.move(action as Direction);
+    const ambience = gameState?.stage.getAmbience();
     setTimeout(() => {
+      setAmbience(ambience);
       setBackground(gameState?.stage.name()!);
     }, 100);
   };
@@ -69,7 +77,7 @@ export default function Main() {
   switch (screen) {
     case Screen.MAIN_MENU:
       return (
-        <GameWrapper ambience="snowwind" background="/img/background.webp">
+        <GameWrapper ambience={ambience} background="/img/background.webp">
           <Menu>
             <MainMenu
               handleNewGame={newGame}
@@ -81,7 +89,7 @@ export default function Main() {
       );
     case Screen.NEW_GAME: {
       return (
-        <GameWrapper ambience="snowwind" background="/img/background.webp">
+        <GameWrapper ambience={ambience} background="/img/background.webp">
           <Menu>
             <NewGame handler={handleNewGame} />
           </Menu>
@@ -90,7 +98,7 @@ export default function Main() {
     }
     case Screen.LOAD_GAME: {
       return (
-        <GameWrapper ambience="snowwind" background="/img/background.webp">
+        <GameWrapper ambience={ambience} background="/img/background.webp">
           <Menu>
             <NewGame handler={handleNewGame} />
           </Menu>
@@ -99,7 +107,7 @@ export default function Main() {
     }
     case Screen.SETTINGS: {
       return (
-        <GameWrapper ambience="snowwind" background="/img/background.webp">
+        <GameWrapper ambience={ambience} background="/img/background.webp">
           <Menu>
             <NewGame handler={handleNewGame} />
           </Menu>
@@ -108,10 +116,14 @@ export default function Main() {
     }
     case Screen.GAME: {
       return (
-        <GameWrapper ambience="snowwind" background={background} displayGrid={displayGrid}>
+        <GameWrapper
+          ambience={ambience}
+          background={background}
+          displayGrid={displayGrid}
+        >
           <div className="text-8xl text-red-500 font-extrabold">
-            X: {gameState?.stage.x} Y: {gameState?.stage.y} Z:{" "}
-            {gameState?.stage.z}
+            X: {gameState?.stage.location.x} Y: {gameState?.stage.location.y} Z:{" "}
+            {gameState?.stage.location.z}
           </div>
           <Game handler={updateGameState} />
         </GameWrapper>
