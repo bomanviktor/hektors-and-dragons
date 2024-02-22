@@ -38,6 +38,7 @@ export class Stage {
     this.location = { x, y, z };
     this.ambience = "wind-snow-peak";
     this.allowedMoves = [];
+    this.setMusic();
   }
 
   move(direction: Direction) {
@@ -92,7 +93,8 @@ export class Stage {
           coordinate.y == this.location.y &&
           coordinate.z == this.location.z
         ) {
-          if (location.includes("battle")) {
+          console.log("location:", location)
+          if (location.includes("Battle")) {
             this.battleMusic = `${camelToKebab(location)}`;
           } else {
             this.backgroundMusic = `${camelToKebab(location)}`;

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 const Music = ({ track }: { track?: string }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [currentTrack, setTrack] = useState<string | undefined>();
-
+console.log(track)
   useEffect(() => {
     const playAudio = async () => {
       if (track === "stop") {

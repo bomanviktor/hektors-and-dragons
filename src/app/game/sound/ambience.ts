@@ -29,9 +29,9 @@ export const ambiences = {
     { x: 16, y: 1, z: -1 },
   ],
   cave2: [{ x: 10, y: 1, z: 0 }],
-  night: [{ x: 8, y: 0, z: 1 }],
+  night: [{ x: 8, y: -1, z: 1 }],
   tavern: [
-    { x: 8, y: 0, z: 0 },
+    { x: 8, y: -1, z: 0 },
     { x: 16, y: 3, z: -1 },
     { x: 16, y: 3, z: -2 },
   ],
@@ -42,6 +42,7 @@ export const ambiences = {
   waterfall: [
     { x: 5, y: -2, z: 0 },
     { x: 5, y: -1, z: 0 },
+    { x: 8, y: 0, z: 0 },
   ],
   windForest: [
     { x: 4, y: -1, z: 0 },
