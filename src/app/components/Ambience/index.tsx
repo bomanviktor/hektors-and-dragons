@@ -6,14 +6,17 @@ const Ambience = ({ track }: { track?: string }) => {
   useEffect(() => {
     const playAudio = async () => {
       try {
-        await audioRef.current?.play();
+        if (audioRef && audioRef.current) {
+          audioRef.current.volume = 0.5;
+          await audioRef.current?.play();
+        }
       } catch (error) {
         console.error("Error playing audio:", error);
       }
     };
 
     const pauseAudio = () => {
-      if (audioRef.current) {
+      if (audioRef && audioRef.current) {
         try {
           audioRef.current.pause();
           audioRef.current.currentTime = 0;
@@ -23,10 +26,17 @@ const Ambience = ({ track }: { track?: string }) => {
       }
     };
 
+    
+
     // Pause and play audio when track changes
     pauseAudio();
 
     if (track) {
+      if (track === "stop") {
+        pauseAudio();
+        audioRef.current = null;
+        return;
+      }
       // Create a new audio element
       const newAudio = new Audio(`./ambience/amb-${track}.mp3`);
       audioRef.current = newAudio;

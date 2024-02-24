@@ -9,7 +9,24 @@ import { MENU_BG_COLOR } from "./constants";
 import Game, { Action } from "./components/Game";
 import { GameState } from "./game/gameState";
 import { PartyData } from "./components/NewGame/createParty";
-import { Direction, Stage } from "./game/stage";
+import { Direction, MusicType, Stage } from "./game/stage";
+import LoreScreen from "./components/LoreScreen";
+
+// Type guards
+const isDirection = (action: Action): action is Direction => {
+  return (
+    action === Direction.UP ||
+    action === Direction.RIGHT ||
+    action === Direction.DOWN ||
+    action === Direction.LEFT ||
+    action === Direction.ABOVE ||
+    action === Direction.BELOW
+  );
+};
+
+const isMusicType = (action: Action): action is MusicType => {
+  return action === MusicType.BATTLE || action === MusicType.BACKGROUND;
+};
 
 enum Screen {
   MAIN_MENU,
@@ -17,6 +34,7 @@ enum Screen {
   LOAD_GAME,
   SETTINGS,
   GAME,
+  LORE_SCREEN
 }
 
 export default function Main() {
@@ -27,6 +45,7 @@ export default function Main() {
   const [ambience, setAmbience] = useState<string | undefined>(
     "wind-snow-peak",
   );
+  const [currentMusic, setMusic] = useState<string | undefined>();
   const newGame = () => {
     playSfx();
     setScreen(Screen.NEW_GAME);
@@ -53,25 +72,48 @@ export default function Main() {
       return;
     }
     setGameState(gameState);
-    setTimeout(() => {
-      setAmbience(gameState.stage.ambience);
-      setBackground(gameState.stage.name());
-    }, 100);
-    setScreen(Screen.GAME);
+    setMusic("music-intro");
+    setScreen(Screen.LORE_SCREEN);
   };
 
-  const updateGameState = (action: Action) => {
-    if ((action as boolean) === true) {
+  const handleLoreScreen = () => {
+    setTimeout(() => {
+      setMusic("stop");
+      setAmbience(gameState!.stage.ambience);
+      setBackground(gameState!.stage.name());
+    }, 100);
+    setScreen(Screen.GAME);
+  }
+
+  const updateGameState = (action: string) => {
+    if (action === "GRID") {
       setDisplayGrid(!displayGrid);
       return;
     }
+    if (action == "TOGGLE_AMBIENCE") {
+      if (ambience !== "stop") {
+        setAmbience("stop");
+        return;
+      }
+    }
+    const music = gameState?.stage.chooseMusic(action);
+    if (music) {
+      if (music === currentMusic) {
+        setMusic("stop");
+      } else {
+        setMusic(music);
+      }
+    }
 
-    gameState?.stage.move(action as Direction);
-    const ambience = gameState?.stage.getAmbience();
+    if (isDirection(action)) {
+      gameState?.stage.move(action as Direction);
+    }
+
     setTimeout(() => {
+      const ambience = gameState?.stage.getAmbience();
       setAmbience(ambience);
       setBackground(gameState?.stage.name()!);
-    }, 100);
+    }, 200);
   };
 
   switch (screen) {
@@ -79,6 +121,7 @@ export default function Main() {
       return (
         <GameWrapper ambience={ambience} background="/img/background.webp">
           <Menu>
+            <div className="mb-20"></div>
             <MainMenu
               handleNewGame={newGame}
               handleLoadGame={loadGame}
@@ -114,10 +157,20 @@ export default function Main() {
         </GameWrapper>
       );
     }
+    case Screen.LORE_SCREEN: {
+      return (
+        <GameWrapper ambience={"none"} music={"music-intro"} background="/img/background.webp">
+          <Menu>
+            <LoreScreen handler={handleLoreScreen} />
+          </Menu>
+        </GameWrapper>
+      );
+    }
     case Screen.GAME: {
       return (
         <GameWrapper
           ambience={ambience}
+          music={currentMusic}
           background={background}
           displayGrid={displayGrid}
         >

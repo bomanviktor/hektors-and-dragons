@@ -9,10 +9,10 @@ export interface Race {
 export interface Stats {
   HP: number;
   damage: number;
-  startingMana: number;
-  defense?: number;
-  magic?: number;
-  focus?: number;
+  defense?: string;
+  magic?: string;
+  focus?: string;
+  strength?: string;
   range: string;
   actions: number;
 }
@@ -38,33 +38,29 @@ export interface Ability {
 
 const dwarfPassive: Ability[] = [
   {
-    name: "Sturdy",
-    description: "Gain extra defense by rolling for special.",
-  },
-  {
-    name: "Short",
-    description: "Can't roll for attack after moving.",
+    name: "Defense",
+    description: "Defensive stance that reduces incoming damage next turn.",
   },
 ];
 
 const berserkerAbilities: Ability[] = [
   {
-    name: "Gadgeteer",
+    name: "Mountain Technology",
     description: "Fire your pistol. Boom, headshot.",
     image: "/img/dwarf/berserker/gadgeteer.jpg",
   },
   {
-    name: "Balls of steel",
+    name: "Balls of Steel",
     description: "Leap forward and stun everyone in a small radius around you.",
     image: "/img/dwarf/berserker/balls-of-steel.png",
   },
   {
-    name: "Berserker's rage",
+    name: "Berserker's Rage",
     description: "Multiply your damage for the rest of the turn.",
     image: "/img/dwarf/berserker/berserkers-rage.png",
   },
   {
-    name: "Relentless force",
+    name: "Relentless Force",
     description:
       "Push an enemy backwards, dealing damage and stunning everyone in your path.",
     image: "/img/dwarf/berserker/relentless-force.png",
@@ -73,17 +69,17 @@ const berserkerAbilities: Ability[] = [
 
 const guardianAbilities: Ability[] = [
   {
-    name: "Shield wall",
+    name: "Shield Wall",
     description: "Taunt enemies and take no damage from certain sources.",
     image: "/img/dwarf/guardian/shield-wall.png",
   },
   {
-    name: "Stand united",
+    name: "Stand United",
     description: "Increase your and an adjacent hero's defense.",
     image: "/img/dwarf/guardian/stand-united.png",
   },
   {
-    name: "Rune stone",
+    name: "Rune Stone",
     description:
       "Use your rune stone to shield an ally and teleport them to you.",
     image: "/img/dwarf/guardian/runestone.png",
@@ -96,15 +92,21 @@ const guardianAbilities: Ability[] = [
   },
 ];
 
+const dwarfDescription = `The Order's grasp, a vice upon his kin,
+Their mines laid bare, their treasures worn thin.
+With fiery spirit, he vows to fight,
+And reclaim honor in the darkest night.
+For justice calls, and honor demands,
+A united front against tyrant's hands.`;
+
 export const dwarf: Race = {
   id: "dwarf",
   label: "Dwarf",
   passive: dwarfPassive,
   stats: {
-    HP: 20,
-    damage: 2,
-    startingMana: 2,
-    defense: 1,
+    HP: 21,
+    damage: 7,
+    defense: "1 to 6",
     range: "1",
     actions: 3,
   },
@@ -117,6 +119,7 @@ export const dwarf: Race = {
       },
       abilities: berserkerAbilities,
       image: "/img/dwarf/berserker/profile.png",
+      description: dwarfDescription,
     },
     {
       id: "guardian",
@@ -126,9 +129,7 @@ export const dwarf: Race = {
       },
       abilities: guardianAbilities,
       image: "/img/dwarf/guardian/profile.png",
-      description: `XX, a stout and sturdy dwarf hailing from the depths of the Ironpeak Mountains, possesses a fierce determination and an unwavering loyalty to his kin. 
-
-      Deeply distrustful of the Order's motives, he witnessed firsthand their exploitation of his people's ancestral mines for their own gain. Seeking to reclaim XX people's lost heritage and stand against the oppressive Order, XX  embarks on a solitary quest for justice. XX unparalleled skill with an axe and his unwavering loyalty make him a formidable ally to any who oppose the Order's reign.`,
+      description: dwarfDescription,
     },
   ],
 };
@@ -136,33 +137,29 @@ export const dwarf: Race = {
 const elfPassive: Ability[] = [
   {
     name: "Focus",
-    description: "Bonus stat that grants extra damage.",
-  },
-  {
-    name: "Fragile",
-    description: "Can't enter defensive stance.",
+    description: "Increase your range for the rest of the turn.",
   },
 ];
 
 const darkElfAbilities: Ability[] = [
   {
-    name: "Parallel realms",
+    name: "Parallel Realms",
     description:
       "Equip your daggers and enter the shadow realm. Replace all your spells with shadow versions.",
     image: "/img/elf/dark-elf/parallel-realms.jpg",
   },
   {
-    name: "Back to reality",
+    name: "Back to Reality",
     description: "Equip your bow, enter the normal realm and heal yourself.",
     image: "/img/elf/dark-elf/back-to-reality.jpg",
   },
   {
-    name: "Piercing arrow",
+    name: "Piercing Arrow",
     description: "Shoot an arrow that deals true damage.",
     image: "/img/elf/dark-elf/piercing-arrow.jpg",
   },
   {
-    name: "Eternal darkness",
+    name: "Eternal Darkness",
     description:
       "Drag a target into the shadow realm where you deal bonus damage towards them.",
     image: "/img/elf/dark-elf/eternal-darkness.jpg",
@@ -178,18 +175,18 @@ const darkElfAbilities: Ability[] = [
     image: "/img/elf/dark-elf/demon-eye.jpg",
   },
   {
-    name: "Paralyzing shot",
+    name: "Paralyzing Shot",
     description: "Deal damage to target and stun them.",
     image: "/img/elf/dark-elf/paralyzing-shot.jpg",
   },
   {
-    name: "Shadow blade",
+    name: "Shadow Blade",
     description:
       "Become invisible. The first attack breaks stealth and bonus damage.",
     image: "/img/elf/dark-elf/shadow-blade.jpg",
   },
   {
-    name: "Elven ghost ",
+    name: "Elven Ghost ",
     description:
       "Enter an enhanced state in the shadow realm. Cast back to reality at the end of the turn.",
     image: "/img/elf/dark-elf/elven-ghost.jpg",
@@ -198,12 +195,12 @@ const darkElfAbilities: Ability[] = [
 
 const woodElfAbilities: Ability[] = [
   {
-    name: "Elvish medicine",
+    name: "Elvish Medicine",
     description: "Heal yourself or adjacent companion.",
     image: "/img/elf/wood-elf/elvish-medicine.png",
   },
   {
-    name: "Hail of arrows",
+    name: "Hail of Arrows",
     description: "Next ranged attack will hit multiple enemies.",
     image: "/img/elf/wood-elf/hail-of-arrows.webp",
   },
@@ -213,35 +210,32 @@ const woodElfAbilities: Ability[] = [
     image: "/img/elf/wood-elf/hawk-eye.png",
   },
   {
-    name: "One with nature",
+    name: "One with Nature",
     description:
       "Become one with nature and fire extra lethal arrows towards the closest enemy.",
     image: "/img/elf/wood-elf/one-with-nature.jpg",
   },
 ];
 
+const elfDescription = `In Sylvaneth's embrace, where whispers sigh,
+She once danced 'neath the azure sky.
+But the Order's greed, a relentless pyre,
+Left her homeland scarred with fire.
+With bow in hand, and eyes alight,
+She seeks retribution in the cloak of night.`;
+
 export const elf: Race = {
   id: "elf",
   label: "Elf",
   passive: elfPassive,
   stats: {
-    HP: 10,
-    damage: 2,
-    startingMana: 3,
-    focus: 1,
-    range: "1 or 3",
+    HP: 13,
+    damage: 7,
+    focus: "1 to 6",
+    range: "1 or 2",
     actions: 3,
   },
   classes: [
-    {
-      id: "Dark elf",
-      traits: {
-        primary: "Assassin",
-        secondary: "Ranged DPS",
-      },
-      abilities: darkElfAbilities,
-      image: "/img/elf/dark-elf/profile.jpg",
-    },
     {
       id: "Wood elf",
       traits: {
@@ -250,44 +244,47 @@ export const elf: Race = {
       },
       abilities: woodElfAbilities,
       image: "/img/elf/wood-elf/profile.png",
-      description: `
-      XX, a skilled archer with a heart burdened by loss, hails from the mystical Elven realm of Sylvaneth. 
-
-      Guided by a deep connection with nature and driven by a desire to restore balance, XX now roams the woods surrounding Elysia, in search for new companions who will join XX cause.`,
+      description: elfDescription
     },
+    // {
+    //   id: "Dark elf",
+    //   traits: {
+    //     primary: "Assassin",
+    //     secondary: "Ranged DPS",
+    //   },
+    //   abilities: darkElfAbilities,
+    //   image: "/img/elf/dark-elf/profile.jpg",
+    //   description: elfDescription,
+    // },
   ],
 };
 
 const menPassive: Ability[] = [
   {
-    name: "Duelist",
-    description: "Gain special from damage dealt by basic attacks.",
-  },
-  {
-    name: "Overly aggressive",
-    description: "Can't enter a defensive stance after moving.",
+    name: "Strength",
+    description: "Increase your damage for the rest of the turn.",
   },
 ];
 
 const paladinAbilities: Ability[] = [
   {
-    name: "Unholy retribution",
+    name: "Unholy Retribution",
     description: "Heal target. If the target is an enemy, deal damage instead.",
     image: "/img/men/paladin/unholy-retribution.jpg",
   },
   {
-    name: "Divine strike",
+    name: "Divine Strike",
     description: "Deal damage to target. Heal for the same amount.",
     image: "/img/men/paladin/divine-strike.webp",
   },
   {
-    name: "Stars aligned",
+    name: "Stars Aligned",
     description:
       "Remove all de-buffs from all adjacent companions\n...and heal them\n...and give them an extra action.",
     image: "/img/men/paladin/stars-aligned.webp",
   },
   {
-    name: "Solar flare",
+    name: "Solar Flare",
     description:
       "Cast a solar flare from your shield and deal massive damage in a straight line.",
     image: "/img/men/paladin/solar-flare.webp",
@@ -302,18 +299,18 @@ const commanderAbilities: Ability[] = [
     image: "/img/men/commander/riposte.jpg",
   },
   {
-    name: "Elysian toxin",
+    name: "Elysian Toxin",
     description:
       "Poison your blade with Elysian poison. The next target you attack will take extra damage from all basic attacks.",
     image: "/img/men/commander/elysian-toxin.jpg",
   },
   {
-    name: "Titanic blow",
+    name: "Titanic Blow",
     description: "Deal damage to your target and stun them for 1 turn.",
     image: "/img/men/commander/titanic-blow.jpg",
   },
   {
-    name: "Elysian tactics",
+    name: "Elysian Tactics",
     description:
       "Use your knowledge as a commander to inspire your companions, granting you all actions and bonus damage this turn.",
     image: "/img/men/commander/elysian-tactics.jpg",
@@ -322,36 +319,42 @@ const commanderAbilities: Ability[] = [
 
 const rangerAbilities: Ability[] = [
   {
-    name: "Steel traps",
+    name: "Steel Traps",
     description: "Set a steel trap that stuns and deals damage",
     image: "/img/men/ranger/steel-traps.jpg",
   },
   {
-    name: "Focused shot",
+    name: "Focused Shot",
     description: "Gain extra range and damage this turn.",
     image: "/img/men/ranger/focused-shot.jpg",
   },
   {
-    name: "Agile archer",
+    name: "Agile Archer",
     description: "Dash in any direction and fire your bow.",
     image: "/img/men/ranger/agile-archer.jpg",
   },
   {
-    name: "Hunting dogs",
+    name: "Hunting Dogs",
     description: "Summon your hunting dogs.",
     image: "/img/men/ranger/hunting-dogs.jpg",
   },
 ];
+
+const manDescription = `In the shadows he walks, a knight of old,
+Haunted by memories, his heart grown cold.
+Once loyal to Elysia's noble creed,
+Betrayed by the Order, his wounds still bleed.
+In the wilderness he roams, a lone crusade,
+To confront his past, and the debt to be paid.`;
 
 export const man: Race = {
   id: "man",
   label: "Human",
   passive: menPassive,
   stats: {
-    HP: 15,
-    damage: 2,
-    startingMana: 1,
-    defense: 1,
+    HP: 21,
+    damage: 7,
+    strength: "1 to 6",
     range: "1 or 2",
     actions: 3,
   },
@@ -364,15 +367,7 @@ export const man: Race = {
       },
       abilities: paladinAbilities,
       image: "/img/men/paladin/profile.webp",
-    },
-    {
-      id: "commander",
-      traits: {
-        primary: "Melee DPS",
-        secondary: "Buffer",
-      },
-      abilities: commanderAbilities,
-      image: "/img/men/commander/profile.jpg",
+      description: manDescription,
     },
     {
       id: "ranger",
@@ -382,29 +377,35 @@ export const man: Race = {
       },
       abilities: rangerAbilities,
       image: "/img/men/ranger/profile.jpg",
+      description: manDescription,
     },
+    // {
+    //   id: "commander",
+    //   traits: {
+    //     primary: "Melee DPS",
+    //     secondary: "Buffer",
+    //   },
+    //   abilities: commanderAbilities,
+    //   image: "/img/men/commander/profile.jpg",
+    // },
   ],
 };
 
 const wizardPassive: Ability[] = [
   {
-    name: "Magician",
-    description: "Bonus stat that can either heal or deal damage.",
-  },
-  {
-    name: "Old",
-    description: "Can't enter a defensive stance.",
+    name: "Magic",
+    description: "Heal an ally or deal damage to a foe.",
   },
 ];
 
 const elementalistAbilities: Ability[] = [
   {
-    name: "Zephyrus",
+    name: "Zephyr",
     description: "Deal damage to and stun all enemies in a small area.",
     image: "/img/wizard/elementalist/zephyrus.jpg",
   },
   {
-    name: "Seismic force",
+    name: "Seismic Force",
     description: "Elevate the ground at target location.",
     image: "/img/wizard/elementalist/seismic-force.jpg",
   },
@@ -414,7 +415,7 @@ const elementalistAbilities: Ability[] = [
     image: "/img/wizard/elementalist/frostbite.jpg",
   },
   {
-    name: "Unstoppable inferno",
+    name: "Unstoppable Inferno",
     description:
       "Deal damage to all adjacent at the start and at the end of your turn for multiple turns.",
     image: "/img/wizard/elementalist/unstoppable-inferno.png",
@@ -423,24 +424,24 @@ const elementalistAbilities: Ability[] = [
 
 const voidMageAbilities: Ability[] = [
   {
-    name: "Enter the void",
+    name: "Enter the Void",
     description: "Send an enemy into the void. Gain no loot from this enemy.",
     image: "/img/wizard/void-mage/into-the-void.jpg",
   },
   {
-    name: "A forgotten force",
+    name: "A Forgotten Force",
     description:
       "Deal damage to and reduce their damage dealt until the end of the battle.",
     image: "/img/wizard/void-mage/a-forgotten-force.jpg",
   },
   {
-    name: "Ancient scrolls",
+    name: "Ancient Scrolls",
     description:
       "Summon a demon from the void that will perish after this battle.",
     image: "/img/wizard/void-mage/ancient-scrolls.png",
   },
   {
-    name: "Illusive reality ",
+    name: "Illusive Reality ",
     description:
       "Pull out enemies previously sent into the void and hurl them towards the enemy.",
     image: "/img/wizard/void-mage/illusive-reality.jpg",
@@ -470,15 +471,21 @@ const shapeShifterAbilities: Ability[] = [
   },
 ];
 
+const wizardDescription = `In the tower tall, where secrets lie,
+Lives the mage, with a gleam in his eye.
+With ancient scrolls and whispered spells,
+He wields his power where darkness dwells.
+In shadows deep, his knowledge unfurls,
+The mage commands the arcane worlds.`;
+
 export const wizard: Race = {
   id: "wizard",
   label: "Wizard",
   passive: wizardPassive,
   stats: {
-    HP: 15,
-    damage: 2,
-    startingMana: 5,
-    magic: 1,
+    HP: 13,
+    damage: 7,
+    magic: "1 to 6",
     range: "2",
     actions: 3,
   },
@@ -491,6 +498,7 @@ export const wizard: Race = {
       },
       abilities: elementalistAbilities,
       image: "/img/wizard/elementalist/profile.jpg",
+      description: wizardDescription,
     },
     {
       id: "void mage",
@@ -500,15 +508,16 @@ export const wizard: Race = {
       },
       abilities: voidMageAbilities,
       image: "/img/wizard/void-mage/profile.jpg",
+      description: wizardDescription,
     },
-    {
-      id: "shape shifter",
-      traits: {
-        primary: "Nuking",
-        secondary: "Summoning",
-      },
-      abilities: shapeShifterAbilities,
-      image: "/img/wizard/shape-shifter/profile.jpg",
-    },
+    // {
+    //   id: "shape shifter",
+    //   traits: {
+    //     primary: "Nuking",
+    //     secondary: "Summoning",
+    //   },
+    //   abilities: shapeShifterAbilities,
+    //   image: "/img/wizard/shape-shifter/profile.jpg",
+    // },
   ],
 };

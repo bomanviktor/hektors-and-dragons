@@ -1,26 +1,37 @@
 import React, { useEffect, useRef } from "react";
 
+
 const Music = ({ track }: { track?: string }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const playAudio = async () => {
-      try {
-        await audioRef.current?.play();
-      } catch (error) {
-        console.error("Error playing audio:", error);
+      if (track === "stop") {
+        pauseAudio();
+        audioRef.current = null;
+      } else {
+        pauseAudio();
+
+        audioRef.current = new Audio(`./music/${track}.mp3`);
+        await audioRef.current.play();
+      }
+    };
+
+    const pauseAudio = () => {
+      if (audioRef.current) {
+        try {
+          audioRef.current.pause();
+          audioRef.current.currentTime = 0;
+        } catch (error) {
+          console.error("Error pausing audio:", error);
+        }
       }
     };
 
     playAudio();
-  }, []);
+  }, [track]);
 
-  return (
-    <audio ref={audioRef} loop className="hidden">
-      <source src={`./music/${track}.mp3`} type="audio/mp3" />
-      Your browser does not support the audio element.
-    </audio>
-  );
+  return <audio ref={audioRef} loop className="hidden"></audio>;
 };
 
 export default Music;

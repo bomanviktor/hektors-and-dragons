@@ -14,7 +14,7 @@ export class GameState {
     difficulty: string,
     players: Character[],
     chapter = "goetia",
-    stage = new Stage("goetia", 0, 0, 0),
+    stage = new Stage("goetia", 2, 0, 0),
   ) {
     this.chapter = chapter;
     this.partyName = partyName;
