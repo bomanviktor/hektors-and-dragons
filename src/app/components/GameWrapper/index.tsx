@@ -37,7 +37,7 @@ const GameWrapper = ({
 
   return (
     <main
-      className="relative h-screen w-screen py-10 px-52"
+      className="relative h-screen w-screen py-10 px-52 font-serif"
       style={backgroundStyle}
     >
       {displayGrid && (

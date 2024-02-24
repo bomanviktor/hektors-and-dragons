@@ -3,7 +3,7 @@ import CreateParty, { PartyData } from "./createParty";
 import CreateCharacter, { Character } from "./createCharacter";
 
 export const textInputClassName =
-  "p-1 text-black text-2xl w-2/3 font-medium focus:outline-none focus:bg-white focus:border-gray-300 rounded-lg text-start";
+  "p-1 text-black text-2xl w-1/2 font-medium focus:outline-none focus:bg-white focus:border-gray-300 rounded-lg text-start";
 
 const NewGame = ({
   handler,
