@@ -5,8 +5,15 @@ const Ambience = ({ track }: { track?: string }) => {
 
   useEffect(() => {
     const playAudio = async () => {
+      if (track === "stop") {
+        pauseAudio();
+        audioRef.current = null;
+      }
       try {
-        await audioRef.current?.play();
+        if (audioRef.current) {
+          audioRef.current.volume = 0.5;
+          await audioRef.current?.play();
+        }
       } catch (error) {
         console.error("Error playing audio:", error);
       }

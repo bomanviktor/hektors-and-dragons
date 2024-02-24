@@ -82,6 +82,12 @@ export default function Main() {
       setDisplayGrid(!displayGrid);
       return;
     }
+    if (action == "TOGGLE_AMBIENCE") {
+      if (ambience !== "stop") {
+        setAmbience("stop");
+        return;
+      }
+    }
     const music = gameState?.stage.chooseMusic(action);
     if (music) {
       if (music === currentMusic) {

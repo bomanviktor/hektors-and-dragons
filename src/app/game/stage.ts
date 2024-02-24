@@ -17,6 +17,7 @@ export enum Direction {
 export enum MusicType {
   BATTLE = "BATTLE_MUSIC",
   BACKGROUND = "BACKGROUND_MUSIC",
+  STOP = "STOP_MUSIC",
 }
 
 export interface Location {
@@ -72,6 +73,8 @@ export class Stage {
         return this.battleMusic;
       case "BACKGROUND_MUSIC":
         return this.backgroundMusic;
+      case "STOP_MUSIC":
+        return "stop";
     }
   }
 

@@ -19,19 +19,31 @@ const Game = ({ handler }: { handler: (input: string) => void }) => {
         case "ArrowRight":
           handler("RIGHT");
           break;
+        case "Z":
         case "z":
           handler("ABOVE");
           break;
+        case "X":
         case "x":
           handler("BELOW");
           break;
         case " ":
           handler("GRID");
           break;
-        case "o":
+        case "S":
+        case "s":
+            handler("STOP_MUSIC");
+            break;
+        case "A":
+        case "a":
+          handler("TOGGLE_AMBIENCE");
+          break;
+        case "M":
+        case "m":
           handler("BACKGROUND_MUSIC");
           break;
-        case "p":
+        case "B":
+        case "b":
           handler("BATTLE_MUSIC");
           break;
         default:
