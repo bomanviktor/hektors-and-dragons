@@ -26,7 +26,7 @@ export const tracklist = {
   ],
   musicBattleBig: [{ x: 9, y: -2, z: -1 }],
   musicMountainsCalm: [
-    { x: 0, y: 0, z: 0 },
+    { x: 2, y: 0, z: 0 },
     { x: 16, y: 4, z: -1 },
   ],
   musicGoetia: [{ x: 13, y: 0, z: 0 }],

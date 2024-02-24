@@ -107,9 +107,9 @@ const CharacterCreation: React.FC<CreateCharacterProps> = ({
         <button
           type="button"
           onClick={() => handler(-1)}
-          className={`${CYCLE_COLOR} ${CYCLE_HOVER_COLOR} text-4xl font-extrabold transition cursor-default`}
+          className={`${CYCLE_COLOR} ${CYCLE_HOVER_COLOR} text-5xl font-extrabold transition cursor-default`}
         >
-          {"<--"}
+          {"↢"}
         </button>
         <label htmlFor={selectedRace.id} className="text-3xl self-center">
           {type === "race"
@@ -119,9 +119,9 @@ const CharacterCreation: React.FC<CreateCharacterProps> = ({
         <button
           type="button"
           onClick={() => handler(1)}
-          className={`${CYCLE_COLOR} ${CYCLE_HOVER_COLOR} text-4xl font-extrabold transition cursor-default`}
+          className={`${CYCLE_COLOR} ${CYCLE_HOVER_COLOR} text-5xl font-extrabold transition cursor-default`}
         >
-          {"-->"}
+          {"↣"}
         </button>
       </div>
     );
@@ -133,9 +133,12 @@ const CharacterCreation: React.FC<CreateCharacterProps> = ({
     }
 
     return (
-      <div className="text-sm flex flex-col mt-2">
+      <div className="text-sm flex flex-col mt-2 mr-10">
         <label className="text-xl">Description</label>
+        <hr />
+        <div className=" bg-indigo-700 bg-opacity-40 p-3">
         {playerClass.description.replaceAll("XX", characterName)}
+        </div>
       </div>
     );
   };
@@ -160,7 +163,7 @@ const CharacterCreation: React.FC<CreateCharacterProps> = ({
               defaultValue={`Player ${characterList.length + 1}`}
               value={characterName}
               onChange={(e) => setCharacterName(e.target.value)}
-              className={textInputClassName}
+              className={"p-1 text-black text-2xl w-2/3 font-medium focus:outline-none focus:bg-white focus:border-gray-300 rounded-lg text-start"}
             />
           </div>
           <CycleButton handler={cycleRace} type={"race"} />
@@ -190,9 +193,10 @@ const CharacterCreation: React.FC<CreateCharacterProps> = ({
               </div>
             </div>
 
-            <div id="second-row" className="flex items-center">
+            <div id="second-row" className="flex items-center mt-5">
               <div id="passive flex-1">
-                <label className="text-xl">Passive</label>
+                <label className="text-xl ml-1">Passive</label>
+                <hr />
                 <DisplayAbilities
                   abilities={selectedRace.passive}
                   withImage={false}
@@ -222,8 +226,9 @@ const DisplayStats = ({ stats }: { stats: Stats }) => {
     ? stats.defense
     : stats.focus
       ? stats.focus
-      : stats.magic;
-  const special = stats.defense ? "Defense" : stats.focus ? "Focus" : "Magic";
+      : stats.magic
+      ? stats.magic : stats.strength;
+  const special = stats.defense ? "Defense" : stats.focus ? "Focus" : stats.magic ? "Magic" : "Strength";
   return (
     <div id="stats" className="text-l">
       <p>
@@ -231,9 +236,6 @@ const DisplayStats = ({ stats }: { stats: Stats }) => {
       </p>
       <p>
         <strong>Damage:</strong> {stats.damage}
-      </p>
-      <p>
-        <strong>Starting Mana:</strong> {stats.startingMana}
       </p>
       <p>
         <strong>{special}:</strong> {specialStat}

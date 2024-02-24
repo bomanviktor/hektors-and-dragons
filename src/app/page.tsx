@@ -10,6 +10,7 @@ import Game, { Action } from "./components/Game";
 import { GameState } from "./game/gameState";
 import { PartyData } from "./components/NewGame/createParty";
 import { Direction, MusicType, Stage } from "./game/stage";
+import LoreScreen from "./components/LoreScreen";
 
 // Type guards
 const isDirection = (action: Action): action is Direction => {
@@ -33,6 +34,7 @@ enum Screen {
   LOAD_GAME,
   SETTINGS,
   GAME,
+  LORE_SCREEN
 }
 
 export default function Main() {
@@ -70,12 +72,18 @@ export default function Main() {
       return;
     }
     setGameState(gameState);
+    setMusic("music-intro");
+    setScreen(Screen.LORE_SCREEN);
+  };
+
+  const handleLoreScreen = () => {
     setTimeout(() => {
-      setAmbience(gameState.stage.ambience);
-      setBackground(gameState.stage.name());
+      setMusic("stop");
+      setAmbience(gameState!.stage.ambience);
+      setBackground(gameState!.stage.name());
     }, 100);
     setScreen(Screen.GAME);
-  };
+  }
 
   const updateGameState = (action: string) => {
     if (action === "GRID") {
@@ -113,6 +121,7 @@ export default function Main() {
       return (
         <GameWrapper ambience={ambience} background="/img/background.webp">
           <Menu>
+            <div className="mb-20"></div>
             <MainMenu
               handleNewGame={newGame}
               handleLoadGame={loadGame}
@@ -144,6 +153,15 @@ export default function Main() {
         <GameWrapper ambience={ambience} background="/img/background.webp">
           <Menu>
             <NewGame handler={handleNewGame} />
+          </Menu>
+        </GameWrapper>
+      );
+    }
+    case Screen.LORE_SCREEN: {
+      return (
+        <GameWrapper ambience={"none"} music={"music-intro"} background="/img/background.webp">
+          <Menu>
+            <LoreScreen handler={handleLoreScreen} />
           </Menu>
         </GameWrapper>
       );

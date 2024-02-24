@@ -31,7 +31,7 @@ const Normal = () => {
     <ul className="flex flex-col items-center">
       <li>Start with 20 gold.</li>
       <li>Standard amount of enemies per battle.</li>
-      <li>You have probablyplayed an RPG before.</li>
+      <li>You have probably played an RPG before.</li>
     </ul>
   );
 };
@@ -100,20 +100,20 @@ const CreateParty: React.FC<CreatePartyProps> = ({ onSubmit }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <Title text="New Game" />
+      <Title text="New Game" size="8xl"/>
       <form
         onChange={() => setError(null)}
         onSubmit={handleSubmit}
-        className="flex flex-col"
+        className="flex flex-col mt-10"
       >
         <div className="flex items-center">
-          <label className="text-3xl mr-1">Party Name</label>
+          <label className="text-3xl mr-1">Party Name:</label>
           <input
             type="text"
             maxLength={20}
             value={partyName}
             onChange={(e) => setPartyName(e.target.value)}
-            className={textInputClassName}
+            className={`${textInputClassName}`}
           />
         </div>
 
