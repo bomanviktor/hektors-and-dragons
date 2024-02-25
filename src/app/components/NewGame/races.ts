@@ -244,7 +244,7 @@ export const elf: Race = {
       },
       abilities: woodElfAbilities,
       image: "/img/elf/wood-elf/profile.png",
-      description: elfDescription
+      description: elfDescription,
     },
     // {
     //   id: "Dark elf",

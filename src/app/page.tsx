@@ -34,7 +34,7 @@ enum Screen {
   LOAD_GAME,
   SETTINGS,
   GAME,
-  LORE_SCREEN
+  LORE_SCREEN,
 }
 
 export default function Main() {
@@ -83,7 +83,7 @@ export default function Main() {
       setBackground(gameState!.stage.name());
     }, 100);
     setScreen(Screen.GAME);
-  }
+  };
 
   const updateGameState = (action: string) => {
     if (action === "GRID") {
@@ -159,7 +159,11 @@ export default function Main() {
     }
     case Screen.LORE_SCREEN: {
       return (
-        <GameWrapper ambience={"none"} music={"music-intro"} background="/img/background.webp">
+        <GameWrapper
+          ambience={"none"}
+          music={"music-intro"}
+          background="/img/background.webp"
+        >
           <Menu>
             <LoreScreen handler={handleLoreScreen} />
           </Menu>

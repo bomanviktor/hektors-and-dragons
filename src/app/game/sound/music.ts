@@ -1,7 +1,5 @@
 export const tracklist = {
-  musicGate: [
-    { x: 8, y: 0, z: 0 },
-  ],
+  musicGate: [{ x: 8, y: 0, z: 0 }],
   musicMountainsNjol: [
     { x: 4, y: -1, z: 0 },
     { x: 3, y: -1, z: 0 },

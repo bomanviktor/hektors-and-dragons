@@ -26,8 +26,6 @@ const Ambience = ({ track }: { track?: string }) => {
       }
     };
 
-    
-
     // Pause and play audio when track changes
     pauseAudio();
 
