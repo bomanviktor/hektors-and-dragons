@@ -137,7 +137,7 @@ const CharacterCreation: React.FC<CreateCharacterProps> = ({
         <label className="text-xl">Description</label>
         <hr />
         <div className=" bg-indigo-700 bg-opacity-40 p-3">
-        {playerClass.description.replaceAll("XX", characterName)}
+          {playerClass.description.replaceAll("XX", characterName)}
         </div>
       </div>
     );
@@ -163,7 +163,9 @@ const CharacterCreation: React.FC<CreateCharacterProps> = ({
               defaultValue={`Player ${characterList.length + 1}`}
               value={characterName}
               onChange={(e) => setCharacterName(e.target.value)}
-              className={"p-1 text-black text-2xl w-2/3 font-medium focus:outline-none focus:bg-white focus:border-gray-300 rounded-lg text-start"}
+              className={
+                "p-1 text-black text-2xl w-2/3 font-medium focus:outline-none focus:bg-white focus:border-gray-300 rounded-lg text-start"
+              }
             />
           </div>
           <CycleButton handler={cycleRace} type={"race"} />
@@ -227,8 +229,15 @@ const DisplayStats = ({ stats }: { stats: Stats }) => {
     : stats.focus
       ? stats.focus
       : stats.magic
-      ? stats.magic : stats.strength;
-  const special = stats.defense ? "Defense" : stats.focus ? "Focus" : stats.magic ? "Magic" : "Strength";
+        ? stats.magic
+        : stats.strength;
+  const special = stats.defense
+    ? "Defense"
+    : stats.focus
+      ? "Focus"
+      : stats.magic
+        ? "Magic"
+        : "Strength";
   return (
     <div id="stats" className="text-l">
       <p>

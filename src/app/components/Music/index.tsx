@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 
-
 const Music = ({ track }: { track?: string }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 

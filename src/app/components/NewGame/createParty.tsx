@@ -100,7 +100,7 @@ const CreateParty: React.FC<CreatePartyProps> = ({ onSubmit }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <Title text="New Game" size="8xl"/>
+      <Title text="New Game" size="8xl" />
       <form
         onChange={() => setError(null)}
         onSubmit={handleSubmit}

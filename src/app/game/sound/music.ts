@@ -1,15 +1,16 @@
 export const tracklist = {
-  musicGate: [
-    { x: 8, y: 0, z: 0 },
-  ],
+  musicGate: [{ x: 8, y: 0, z: 0 }],
   musicMountainsNjol: [
-    { x: 4, y: -1, z: 0 },
     { x: 3, y: -1, z: 0 },
     { x: 3, y: -2, z: 0 },
     { x: 5, y: -1, z: 0 },
     { x: 9, y: 0, z: 0 },
     { x: 10, y: 0, z: 0 },
     { x: 11, y: 0, z: 0 },
+  ],
+  musicFlute: [
+    {x: 4, y: -1, z: 0},
+    {x: 4, y: -2, z: 0},
   ],
   musicRoyalty: [
     { x: 7, y: -2, z: 0 },

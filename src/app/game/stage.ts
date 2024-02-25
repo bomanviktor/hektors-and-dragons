@@ -96,7 +96,7 @@ export class Stage {
           coordinate.y == this.location.y &&
           coordinate.z == this.location.z
         ) {
-          console.log("location:", location)
+          console.log("location:", location);
           if (location.includes("Battle")) {
             this.battleMusic = `${camelToKebab(location)}`;
           } else {
@@ -127,8 +127,8 @@ export class Stage {
 
   name(): string {
     if (this.location.z === 0) {
-      return `/img/chapters/${this.chapter}/x${this.location.x}y${this.location.y}.png`;
+      return `/img/chapters/${this.chapter}/x${this.location.x}y${this.location.y}.jpg`;
     }
-    return `/img/chapters/${this.chapter}/x${this.location.x}y${this.location.y}z${this.location.z}.png`;
+    return `/img/chapters/${this.chapter}/x${this.location.x}y${this.location.y}z${this.location.z}.jpg`;
   }
 }

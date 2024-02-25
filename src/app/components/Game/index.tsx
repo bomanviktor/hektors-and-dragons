@@ -32,8 +32,8 @@ const Game = ({ handler }: { handler: (input: string) => void }) => {
           break;
         case "S":
         case "s":
-            handler("STOP_MUSIC");
-            break;
+          handler("STOP_MUSIC");
+          break;
         case "A":
         case "a":
           handler("TOGGLE_AMBIENCE");

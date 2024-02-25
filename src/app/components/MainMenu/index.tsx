@@ -16,7 +16,7 @@ const MainMenu = ({
   return (
     <div className="flex flex-col items-center">
       <Title text="Main Menu" size="8xl" />
-      <ul className="flex flex-col mt-10 border-0 p-20 justify-between">
+      <ul className="flex flex-col border-0 p-20 justify-between">
         <MenuItem text="New Game" handler={handleNewGame} />
         <MenuItem text="Load Game" handler={handleLoadGame} />
         <MenuItem text="Settings" handler={handleSettings} />
