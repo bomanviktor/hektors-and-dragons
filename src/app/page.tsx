@@ -178,7 +178,7 @@ export default function Main() {
           background={background}
           displayGrid={displayGrid}
         >
-          <div className="text-8xl text-red-500 font-extrabold">
+          <div className="text-l text-black top-0 left-0">
             X: {gameState?.stage.location.x} Y: {gameState?.stage.location.y} Z:{" "}
             {gameState?.stage.location.z}
           </div>
