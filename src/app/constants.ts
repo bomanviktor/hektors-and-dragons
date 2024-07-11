@@ -5,3 +5,5 @@ export const BUTTON_HOVER_COLOR = "hover:bg-blue-300";
 
 export const CYCLE_COLOR = "text-blue-400";
 export const CYCLE_HOVER_COLOR = "hover:text-blue-300";
+
+export const MENU_BACKGROUND = "/img/background-elysia.jpg"

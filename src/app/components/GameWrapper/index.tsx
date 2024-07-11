@@ -9,24 +9,26 @@ interface Params {
   music?: string;
   ambience?: string;
   background?: string;
+  isNight?: boolean;
   displayGrid?: boolean;
 }
 
 const GameWrapper = ({
   children,
-  chapter,
+  chapter = "elysia",
   music,
   ambience,
-  background = "./background.webp",
+  background,
+  isNight = false,
   displayGrid = false,
 }: Params) => {
   const gridLineStyle: React.CSSProperties = {
     position: "absolute",
     top: 0,
     left: 0,
-    color: "black",
-    borderColor: "black",
-    opacity: 5,
+    color: isNight ? "grey" : "black",
+    borderColor: isNight ? "grey" : "black",
+    opacity: isNight ? 0.5 : 0.7,
     borderWidth: 1,
     zIndex: 10,
   };

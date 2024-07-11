@@ -37,9 +37,14 @@ export class Stage {
   constructor(chapter: string, x: number, y: number, z: number) {
     this.chapter = chapter;
     this.location = { x, y, z };
-    this.ambience = "wind-snow-peak";
+    this.ambience = "forest-day";
     this.allowedMoves = [];
     const isNight = false;
+    this.setMusic(isNight);
+  }
+
+  update(isNight: boolean) {
+    this.setAmbience(isNight);
     this.setMusic(isNight);
   }
 
@@ -64,8 +69,7 @@ export class Stage {
         this.location.z!--;
         break;
     }
-    this.setAmbience(isNight);
-    this.setMusic(isNight);
+    this.update(isNight);
   }
 
   chooseMusic(musicType: string): string | undefined {
@@ -141,8 +145,6 @@ export class Stage {
   getAmbience(): string {
     return this.ambience;
   }
-
-
 
   name(isNight: boolean): string {
     if (this.location.z === 0) {

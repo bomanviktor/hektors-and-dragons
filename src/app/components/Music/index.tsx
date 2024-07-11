@@ -28,7 +28,7 @@ const Music = ({ chapter, track }: { chapter?: string; track?: string }) => {
     };
 
     playAudio();
-  }, [track]);
+  }, [track, chapter]);
 
   return <audio ref={audioRef} loop className="hidden"></audio>;
 };

@@ -1,12 +1,12 @@
 import { FormEvent, useState } from "react";
 import { PartyData } from "./createParty";
-import { Title } from "@/app/page";
 import React from "react";
 import { Ability, Race, Stats, Traits, dwarf, elf, man, wizard } from "./races";
 import SubmitButton, { playSfx } from "../SubmitButton";
 import ErrorDisplay from "../Utils/errorDisplay";
 import { CYCLE_COLOR, CYCLE_HOVER_COLOR } from "@/app/constants";
 import Image from "next/image";
+import { Title } from "../Title";
 
 interface CreateCharacterProps {
   partyData: PartyData;

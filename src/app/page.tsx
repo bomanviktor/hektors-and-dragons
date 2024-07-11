@@ -5,7 +5,7 @@ import MainMenu from "./components/MainMenu";
 import GameWrapper from "./components/GameWrapper";
 import { playSfx } from "./components/SubmitButton";
 import { Character } from "./components/NewGame/createCharacter";
-import { MENU_BG_COLOR } from "./constants";
+import { MENU_BACKGROUND, MENU_BG_COLOR } from "./constants";
 import Game, { Action } from "./components/Game";
 import { GameState } from "./game/gameState";
 import { PartyData } from "./components/NewGame/createParty";
@@ -30,6 +30,7 @@ const isMusicType = (action: Action): action is MusicType => {
 
 enum Screen {
   MAIN_MENU,
+  QUICK_PLAY,
   NEW_GAME,
   LOAD_GAME,
   SETTINGS,
@@ -42,11 +43,22 @@ export default function Main() {
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [background, setBackground] = useState("");
   const [displayGrid, setDisplayGrid] = useState(false);
-  const [ambience, setAmbience] = useState<string | undefined>(
-    "wind-snow-peak",
-  );
-  const [night, setNight] = useState<boolean>(false);
+  const [ambience, setAmbience] = useState<string | undefined>("forest-day");
   const [currentMusic, setMusic] = useState<string | undefined>();
+
+  const quickPlay = () => {
+    playSfx();
+    const gameState = new GameState("Quick Play Party", "medium", []);
+    if (!gameState) {
+      return;
+    }
+    setGameState(gameState);
+    setAmbience(gameState.stage.ambience);
+    setMusic(gameState.stage.backgroundMusic);
+    setBackground(gameState.stage.name(gameState.night));
+    setScreen(Screen.GAME);
+  };
+
   const newGame = () => {
     playSfx();
     setScreen(Screen.NEW_GAME);
@@ -73,7 +85,6 @@ export default function Main() {
       return;
     }
     setGameState(gameState);
-    setMusic("music-intro");
     setScreen(Screen.LORE_SCREEN);
   };
 
@@ -100,8 +111,10 @@ export default function Main() {
     if (action == "TOGGLE_AMBIENCE") {
       if (ambience !== "stop") {
         setAmbience("stop");
-        return;
+      } else {
+        setAmbience(gameState.stage.ambience);
       }
+      return;
     }
     const music = gameState.stage.chooseMusic(action);
     if (music) {
@@ -110,6 +123,7 @@ export default function Main() {
       } else {
         setMusic(music);
       }
+      return;
     }
 
     if (isDirection(action)) {
@@ -117,22 +131,27 @@ export default function Main() {
     }
     if (action === "TOGGLE_NIGHT") {
       gameState.night = !gameState.night;
-      setNight(gameState.night);
+      gameState.stage.update(gameState.night);
     }
     setTimeout(() => {
       const ambience = gameState.stage.getAmbience();
       setAmbience(ambience);
       setBackground(gameState.stage.name(gameState.night));
-    }, 200);
+    }, 100);
   };
 
   switch (screen) {
     case Screen.MAIN_MENU:
       return (
-        <GameWrapper ambience={ambience} background="/img/background.webp">
+        <GameWrapper
+          chapter="elysia"
+          ambience={ambience}
+          background={MENU_BACKGROUND}
+        >
           <Menu>
             <div className="mb-20"></div>
             <MainMenu
+              handleQuickPlay={quickPlay}
               handleNewGame={newGame}
               handleLoadGame={loadGame}
               handleSettings={settings}
@@ -140,9 +159,15 @@ export default function Main() {
           </Menu>
         </GameWrapper>
       );
+    case Screen.QUICK_PLAY: {
+    }
     case Screen.NEW_GAME: {
       return (
-        <GameWrapper ambience={ambience} background="/img/background.webp">
+        <GameWrapper
+          chapter="elysia"
+          ambience={ambience}
+          background={MENU_BACKGROUND}
+        >
           <Menu>
             <NewGame handler={handleNewGame} />
           </Menu>
@@ -151,7 +176,7 @@ export default function Main() {
     }
     case Screen.LOAD_GAME: {
       return (
-        <GameWrapper ambience={ambience} background="/img/background.webp">
+        <GameWrapper ambience={ambience} background={MENU_BACKGROUND}>
           <Menu>
             <NewGame handler={handleNewGame} />
           </Menu>
@@ -160,7 +185,7 @@ export default function Main() {
     }
     case Screen.SETTINGS: {
       return (
-        <GameWrapper ambience={ambience} background="/img/background.webp">
+        <GameWrapper ambience={ambience} background={MENU_BACKGROUND}>
           <Menu>
             <NewGame handler={handleNewGame} />
           </Menu>
@@ -170,9 +195,10 @@ export default function Main() {
     case Screen.LORE_SCREEN: {
       return (
         <GameWrapper
-          ambience={"none"}
-          music={"music-intro"}
-          background="/img/background.webp"
+          ambience={"stop"}
+          chapter={gameState?.chapter}
+          // music={"music-start"}
+          background={MENU_BACKGROUND}
         >
           <Menu>
             <LoreScreen handler={handleLoreScreen} />
@@ -187,6 +213,7 @@ export default function Main() {
           ambience={ambience}
           music={currentMusic}
           background={background}
+          isNight={gameState?.night}
           displayGrid={displayGrid}
         >
           <div className="text-l text-black top-0 left-0">
@@ -207,15 +234,5 @@ const Menu = ({ children }: { children: any }) => {
     >
       {children}
     </div>
-  );
-};
-
-interface TitleParams {
-  text: string;
-  size?: string;
-}
-export const Title = ({ text, size = "6xl" }: TitleParams) => {
-  return (
-    <h1 className={`text-${size} cursor-default my-5 self-center`}>{text}</h1>
   );
 };

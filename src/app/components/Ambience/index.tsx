@@ -7,7 +7,7 @@ const Ambience = ({ chapter, track }: { chapter?: string; track?: string }) => {
     const playAudio = async () => {
       try {
         if (audioRef && audioRef.current) {
-          audioRef.current.volume = 0.5;
+          audioRef.current.volume = 0.7;
           await audioRef.current?.play();
         }
       } catch (error) {
@@ -41,7 +41,7 @@ const Ambience = ({ chapter, track }: { chapter?: string; track?: string }) => {
       audioRef.current = newAudio;
       playAudio();
     }
-  }, [track]);
+  }, [track, chapter]);
 
   return (
     <audio ref={audioRef} loop className="hidden">

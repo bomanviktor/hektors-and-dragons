@@ -26,7 +26,7 @@ const LoreScreen = ({ handler }: { handler: () => void }) => {
           </div>
           <div className="mb-5">
             <p>Desperate souls have sought to ascend,</p>
-            <p>Muron's towering heights, a journey to amend.</p>
+            <p>Muron&apos;s towering heights, a journey to amend.</p>
             <p>Yet tragic fates awaited those who dared,</p>
             <p>Their dreams dashed, their hopes ensnared.</p>
           </div>
@@ -41,7 +41,7 @@ const LoreScreen = ({ handler }: { handler: () => void }) => {
         <div className="md:w-1/2">
           <div className="mb-5">
             <p>Within this world, our adventurers tread,</p>
-            <p>Fate's tangled web, their destinies led.</p>
+            <p>Fate&apos;s tangled web, their destinies led.</p>
             <p>Driven by desire, redemption, and more,</p>
             <p>They venture forth, to distant shores.</p>
           </div>
@@ -52,7 +52,7 @@ const LoreScreen = ({ handler }: { handler: () => void }) => {
             <p>Their journey fraught, yet they press on.</p>
           </div>
           <div className="mb-5">
-            <p>For beyond Muron's unyielding might,</p>
+            <p>For beyond Muron&apos;s unyielding might,</p>
             <p>Lies the truth, hidden from sight.</p>
             <p>But peril awaits, and dangers untold,</p>
             <p>Their courage tested, their spirits bold.</p>

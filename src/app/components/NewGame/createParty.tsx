@@ -1,10 +1,10 @@
 // CreateParty.tsx
 
-import { Title } from "@/app/page";
 import React, { useState, FormEvent } from "react";
 import { textInputClassName } from ".";
 import SubmitButton, { playSfx } from "../SubmitButton";
 import ErrorDisplay from "../Utils/errorDisplay";
+import { Title } from "../Title";
 
 interface CreatePartyProps {
   onSubmit: (partyData: PartyData) => void;
@@ -100,7 +100,7 @@ const CreateParty: React.FC<CreatePartyProps> = ({ onSubmit }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <Title text="New Game" size="8xl" />
+      <Title text="New Game" size="4xl" />
       <form
         onChange={() => setError(null)}
         onSubmit={handleSubmit}
