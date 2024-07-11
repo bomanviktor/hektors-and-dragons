@@ -1,10 +1,11 @@
 import Ambience from "../Ambience";
 import Music from "../Music";
 
-import React, { useState } from "react";
+import React from "react";
 
 interface Params {
   children: React.ReactNode;
+  chapter?: string;
   music?: string;
   ambience?: string;
   background?: string;
@@ -13,6 +14,7 @@ interface Params {
 
 const GameWrapper = ({
   children,
+  chapter,
   music,
   ambience,
   background = "./background.webp",
@@ -22,8 +24,8 @@ const GameWrapper = ({
     position: "absolute",
     top: 0,
     left: 0,
-    color: "grey",
-    borderColor: "grey",
+    color: "black",
+    borderColor: "black",
     opacity: 5,
     borderWidth: 1,
     zIndex: 10,
@@ -70,8 +72,8 @@ const GameWrapper = ({
         </div>
       )}
       {children}
-      {music ? <Music track={music} /> : null}
-      {ambience ? <Ambience track={ambience} /> : null}
+      {music ? <Music chapter={chapter} track={music} /> : null}
+      {ambience ? <Ambience chapter={chapter} track={ambience} /> : null}
     </main>
   );
 };

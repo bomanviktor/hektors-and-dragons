@@ -78,24 +78,19 @@ export default function Main() {
   };
 
   const handleLoreScreen = () => {
+    if (!gameState) {
+      return;
+    }
     setTimeout(() => {
       setMusic("stop");
-      setAmbience(gameState!.stage.ambience);
-      setBackground(gameState!.stage.name());
+      setAmbience(gameState.stage.ambience);
+      setBackground(gameState.stage.name(gameState.night));
     }, 100);
     setScreen(Screen.GAME);
   };
 
   const updateGameState = (action: string) => {
     if (!gameState) {
-      return;
-    }
-    if (action === "TOGGLE_NIGHT") {
-      if (!gameState) {
-        return;
-      }
-      gameState.night = !gameState.night;
-      setNight(gameState.night);
       return;
     }
     if (action === "GRID") {
@@ -108,7 +103,7 @@ export default function Main() {
         return;
       }
     }
-    const music = gameState?.stage.chooseMusic(action);
+    const music = gameState.stage.chooseMusic(action);
     if (music) {
       if (music === currentMusic) {
         setMusic("stop");
@@ -120,15 +115,14 @@ export default function Main() {
     if (isDirection(action)) {
       gameState.stage.move(action as Direction, gameState.night);
     }
-
+    if (action === "TOGGLE_NIGHT") {
+      gameState.night = !gameState.night;
+      setNight(gameState.night);
+    }
     setTimeout(() => {
       const ambience = gameState.stage.getAmbience();
       setAmbience(ambience);
-      let background = gameState.stage.name();
-      if (gameState.night) {
-        background = "night_" + background;
-      }
-      setBackground(background);
+      setBackground(gameState.stage.name(gameState.night));
     }, 200);
   };
 
@@ -189,6 +183,7 @@ export default function Main() {
     case Screen.GAME: {
       return (
         <GameWrapper
+          chapter={gameState?.chapter}
           ambience={ambience}
           music={currentMusic}
           background={background}

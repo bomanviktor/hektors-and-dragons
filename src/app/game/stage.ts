@@ -144,10 +144,18 @@ export class Stage {
 
 
 
-  name(): string {
+  name(isNight: boolean): string {
     if (this.location.z === 0) {
-      return `/img/chapters/${this.chapter}/x${this.location.x}y${this.location.y}.jpg`;
+      if (isNight) {
+        return `/img/chapters/${this.chapter}/night_x${this.location.x}y${this.location.y}.jpg`;
+      } else {
+        return `/img/chapters/${this.chapter}/x${this.location.x}y${this.location.y}.jpg`;
+      }
     }
-    return `/img/chapters/${this.chapter}/x${this.location.x}y${this.location.y}z${this.location.z}.jpg`;
+    if (isNight) {
+      return `/img/chapters/${this.chapter}/night_x${this.location.x}y${this.location.y}z${this.location.z}.jpg`;
+    } else {
+      return `/img/chapters/${this.chapter}/x${this.location.x}y${this.location.y}z${this.location.z}.jpg`;
+    }
   }
 }
