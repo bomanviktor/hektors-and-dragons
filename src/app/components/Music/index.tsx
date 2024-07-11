@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const Music = ({ track }: { track?: string }) => {
+const Music = ({ chapter, track }: { chapter?: string; track?: string }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const Music = ({ track }: { track?: string }) => {
       } else {
         pauseAudio();
 
-        audioRef.current = new Audio(`./music/${track}.mp3`);
+        audioRef.current = new Audio(`./music/${chapter}/${track}.mp3`);
         await audioRef.current.play();
       }
     };

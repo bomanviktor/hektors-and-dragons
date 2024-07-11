@@ -39,10 +39,11 @@ export class Stage {
     this.location = { x, y, z };
     this.ambience = "wind-snow-peak";
     this.allowedMoves = [];
-    this.setMusic();
+    const isNight = false;
+    this.setMusic(isNight);
   }
 
-  move(direction: Direction) {
+  move(direction: Direction, isNight: boolean) {
     switch (direction) {
       case Direction.UP:
         this.location.y++;
@@ -63,8 +64,8 @@ export class Stage {
         this.location.z!--;
         break;
     }
-    this.setAmbience();
-    this.setMusic();
+    this.setAmbience(isNight);
+    this.setMusic(isNight);
   }
 
   chooseMusic(musicType: string): string | undefined {
@@ -87,14 +88,22 @@ export class Stage {
     }
   }
 
-  private setMusic() {
+  private setMusic(isNight: boolean) {
     this.resetMusic(true, true);
-    for (const [location, coordinates] of Object.entries(tracklist)) {
+    let chapterMusic;
+    if (this.chapter === "elysia") {
+      chapterMusic = tracklist.elysia; 
+    } else {
+      chapterMusic = tracklist.goetia;
+    }
+
+    for (const [location, coordinates] of Object.entries(chapterMusic)) {
       for (const coordinate of coordinates) {
         if (
           coordinate.x == this.location.x &&
           coordinate.y == this.location.y &&
-          coordinate.z == this.location.z
+          coordinate.z == this.location.z &&
+          coordinate.night === isNight
         ) {
           console.log("location:", location);
           if (location.includes("Battle")) {
@@ -107,13 +116,21 @@ export class Stage {
     }
   }
 
-  private setAmbience() {
-    for (const [location, coordinates] of Object.entries(ambiences)) {
+  private setAmbience(isNight: boolean) {
+    let chapterAmbiences;
+    if (this.chapter === "elysia") {
+      chapterAmbiences = ambiences.elysia; 
+    } else {
+      chapterAmbiences = ambiences.goetia;
+    };
+
+    for (const [location, coordinates] of Object.entries(chapterAmbiences)) {
       for (const coordinate of coordinates) {
         if (
           coordinate.x == this.location.x &&
           coordinate.y == this.location.y &&
-          coordinate.z == this.location.z
+          coordinate.z == this.location.z &&
+          coordinate.night == isNight
         ) {
           this.ambience = `${camelToKebab(location)}`;
         }
@@ -124,6 +141,8 @@ export class Stage {
   getAmbience(): string {
     return this.ambience;
   }
+
+
 
   name(): string {
     if (this.location.z === 0) {

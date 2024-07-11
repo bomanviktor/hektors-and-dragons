@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-const Ambience = ({ track }: { track?: string }) => {
+const Ambience = ({ chapter, track }: { chapter?: string; track?: string }) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -35,8 +35,9 @@ const Ambience = ({ track }: { track?: string }) => {
         audioRef.current = null;
         return;
       }
+
       // Create a new audio element
-      const newAudio = new Audio(`./ambience/amb-${track}.mp3`);
+      const newAudio = new Audio(`./ambience/${chapter}/amb-${track}.mp3`);
       audioRef.current = newAudio;
       playAudio();
     }
