@@ -46,6 +46,10 @@ const Game = ({ handler }: { handler: (input: string) => void }) => {
         case "b":
           handler("BATTLE_MUSIC");
           break;
+        case "N":
+        case "n":
+          handler("TOGGLE_NIGHT");
+          break;
         default:
           // Handle other key presses if needed
           break;

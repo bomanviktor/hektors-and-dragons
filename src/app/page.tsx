@@ -45,6 +45,7 @@ export default function Main() {
   const [ambience, setAmbience] = useState<string | undefined>(
     "wind-snow-peak",
   );
+  const [night, setNight] = useState<boolean>(false);
   const [currentMusic, setMusic] = useState<string | undefined>();
   const newGame = () => {
     playSfx();
@@ -86,6 +87,17 @@ export default function Main() {
   };
 
   const updateGameState = (action: string) => {
+    if (!gameState) {
+      return;
+    }
+    if (action === "TOGGLE_NIGHT") {
+      if (!gameState) {
+        return;
+      }
+      gameState.night = !gameState.night;
+      setNight(gameState.night);
+      return;
+    }
     if (action === "GRID") {
       setDisplayGrid(!displayGrid);
       return;
@@ -106,13 +118,17 @@ export default function Main() {
     }
 
     if (isDirection(action)) {
-      gameState?.stage.move(action as Direction);
+      gameState.stage.move(action as Direction, gameState.night);
     }
 
     setTimeout(() => {
-      const ambience = gameState?.stage.getAmbience();
+      const ambience = gameState.stage.getAmbience();
       setAmbience(ambience);
-      setBackground(gameState?.stage.name()!);
+      let background = gameState.stage.name();
+      if (gameState.night) {
+        background = "night_" + background;
+      }
+      setBackground(background);
     }, 200);
   };
 
