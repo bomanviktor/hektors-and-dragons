@@ -43,6 +43,7 @@ export default function Main() {
   const [gameState, setGameState] = useState<GameState | null>(null);
   const [background, setBackground] = useState("");
   const [displayGrid, setDisplayGrid] = useState(false);
+  const [displayCoords, setDisplayCoords] = useState(false);
   const [ambience, setAmbience] = useState<string | undefined>("forest-day");
   const [currentMusic, setMusic] = useState<string | undefined>();
 
@@ -108,6 +109,12 @@ export default function Main() {
       setDisplayGrid(!displayGrid);
       return;
     }
+
+    if (action === "TOGGLE_COORDS") {
+      setDisplayCoords(!displayCoords);
+      return;
+    }
+
     if (action == "TOGGLE_AMBIENCE") {
       if (ambience !== "stop") {
         setAmbience("stop");
@@ -116,6 +123,7 @@ export default function Main() {
       }
       return;
     }
+
     const music = gameState.stage.chooseMusic(action);
     if (music) {
       if (music === currentMusic) {
@@ -216,10 +224,13 @@ export default function Main() {
           isNight={gameState?.night}
           displayGrid={displayGrid}
         >
-          <div className="text-l text-black top-0 left-0">
-            X: {gameState?.stage.location.x} Y: {gameState?.stage.location.y} Z:{" "}
-            {gameState?.stage.location.z}
-          </div>
+          {displayCoords ? (
+            <div className="text-l text-grey top-0 left-0">
+              X: {gameState?.stage.location.x} Y: {gameState?.stage.location.y}{" "}
+              Z: {gameState?.stage.location.z}
+            </div>
+          ) : null}
+
           <Game handler={updateGameState} />
         </GameWrapper>
       );

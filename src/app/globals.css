@@ -23,6 +23,7 @@ nextjs-portal {
 body {
   color: rgb(var(--foreground-rgb));
   background-size: cover;
+  background-color: black;
   user-select: none;
   cursor: default;
   font-family: "MedievalSharp", cursive;

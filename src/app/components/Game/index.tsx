@@ -50,6 +50,10 @@ const Game = ({ handler }: { handler: (input: string) => void }) => {
         case "n":
           handler("TOGGLE_NIGHT");
           break;
+        case "C":
+        case "c":
+          handler("TOGGLE_COORDS");
+          break;
         default:
           // Handle other key presses if needed
           break;

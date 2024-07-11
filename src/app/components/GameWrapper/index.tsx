@@ -57,7 +57,6 @@ const GameWrapper = ({
                 }}
               />
             </React.Fragment>
-            //<div style={{ ...gridLineStyle, top: `${(index + 1) * (100 / 9)}%`, height: '1px', width: '100%' }} />
           ))}
           {[...Array(8)].map((_, index) => (
             <React.Fragment key={index}>
