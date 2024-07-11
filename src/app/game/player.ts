@@ -1,15 +1,5 @@
 import { Character } from "../components/NewGame/createCharacter";
-
-interface Stats {
-  HP: number;
-  damage: number;
-  startingMana: number;
-  magic?: number;
-  focus?: number;
-  defense?: number;
-  range: string;
-  actions: number;
-}
+import { Stats } from "../components/NewGame/races";
 
 export class Player {
   name: string;
