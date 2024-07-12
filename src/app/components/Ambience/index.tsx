@@ -7,7 +7,7 @@ const Ambience = ({ chapter, track }: { chapter?: string; track?: string }) => {
     const playAudio = async () => {
       try {
         if (audioRef && audioRef.current) {
-          audioRef.current.volume = 0.7;
+          audioRef.current.volume = 0.75;
           await audioRef.current?.play();
         }
       } catch (error) {
