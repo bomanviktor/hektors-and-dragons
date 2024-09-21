@@ -10,8 +10,8 @@ const Music = ({ chapter, track }: { chapter?: string; track?: string }) => {
         audioRef.current = null;
       } else {
         pauseAudio();
-
         audioRef.current = new Audio(`./music/${chapter}/${track}.mp3`);
+        audioRef.current.volume = 0.5;
         await audioRef.current.play();
       }
     };
