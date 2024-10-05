@@ -130,10 +130,11 @@ export const ambiences = {
       { x: -2, y: -2, z: 0, night: false },
     ],
     cave: [
-      { x: 0, y: 0, z: 0, night: false },
+      { x: 5, y: 0, z: 0, night: false },
       { x: 1, y: 0, z: 0, night: false },
       { x: 2, y: 0, z: 0, night: false },
       { x: 3, y: 0, z: 0, night: false },
+      { x: 4, y: 0, z: 0, night: false },
       { x: -1, y: 1, z: -1, night: false },
       { x: -1, y: 0, z: -1, night: false },
       { x: -2, y: 0, z: -1, night: false },
